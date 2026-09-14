@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://127.0.0.1:27017/ScrapData");
+// Connection is managed centrally in app.js — not here
 
 const userSchema = new mongoose.Schema({
     Name: { type: String, required: true },

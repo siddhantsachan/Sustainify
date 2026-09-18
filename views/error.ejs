@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Sustainify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .error-box {
+            background: white;
+            border-radius: 12px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 480px;
+        }
+        .error-box h1 { font-size: 5rem; color: #e53935; margin: 0; }
+        .error-box h2 { color: #333; margin: 15px 0 10px; }
+        .error-box p  { color: #666; margin-bottom: 30px; }
+        .error-box a  {
+            background: #000;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .error-box a:hover { background: #333; }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <h1>⚠️</h1>
+        <h2>Something went wrong</h2>
+        <p><%= message || "An unexpected error occurred. Please try again." %></p>
+        <a href="/index">Back to Home</a>
+    </div>
+</body>
+</html>

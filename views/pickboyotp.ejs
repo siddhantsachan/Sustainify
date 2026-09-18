@@ -11,7 +11,11 @@
         <div id="form-container">
             <form id="pickup-signup-form" method="post" action="/pickotp">
                 <h2 style="text-align: center;">One Time Password</h2>
-                <input  name="otp" type="number" id="signup-confirm-password" placeholder="One Time Password" required style="width: 275px;">
+                <% if (errorMessage) { %>
+                    <p style="color: red; text-align: center; margin-bottom: 10px;"><%= errorMessage %></p>
+                <% } %>
+                <input name="otp" type="number" id="signup-confirm-password"
+                       placeholder="Enter OTP sent to your email" required style="width: 275px;">
                 <button type="submit">Continue</button>
             </form>
         </div>

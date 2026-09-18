@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycling Suggestions - Sustainify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Navbar */
+        nav { background-color: #000; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; }
+        nav a.brand { color: white; font-size: 28px; font-weight: bold; text-decoration: none; }
+        nav ul { list-style: none; display: flex; gap: 20px; }
+        nav ul li a { color: white; text-decoration: none; font-size: 16px; text-transform: uppercase; }
+        nav ul li a:hover { color: #4caf50; }
+
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #1b5e20, #388e3c); color: white; text-align: center; padding: 50px 20px 40px; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .hero p  { font-size: 1.1rem; opacity: 0.9; }
+
+        /* Form card */
+        .form-card { background: white; max-width: 600px; margin: 40px auto; border-radius: 12px; padding: 35px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .form-card h2 { color: #1b5e20; margin-bottom: 20px; font-size: 1.4rem; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #333; }
+        .input-group select,
+        .input-group input[type="text"] { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 15px; transition: border-color 0.3s; }
+        .input-group select:focus,
+        .input-group input:focus { outline: none; border-color: #4caf50; }
+
+        .btn-suggest { width: 100%; padding: 14px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s, transform 0.2s; }
+        .btn-suggest:hover { background: #1b5e20; transform: translateY(-2px); }
+        .btn-suggest:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+        /* Spinner */
+        .spinner { display: none; text-align: center; padding: 30px; color: #555; }
+        .spinner i { font-size: 2rem; color: #4caf50; animation: spin 1s linear infinite; }
+        @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+        /* Results */
+        .results-section { max-width: 600px; margin: 0 auto 40px; display: none; }
+        .results-section h3 { text-align: center; color: #1b5e20; font-size: 1.3rem; margin-bottom: 20px; }
+        .suggestion-card {
+            background: white;
+            border-left: 5px solid #4caf50;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+        .suggestion-number {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            text-align: center; line-height: 28px;
+            font-weight: bold; font-size: 13px;
+            margin-right: 10px;
+        }
+        .suggestion-text { display: inline; color: #333; font-size: 15px; line-height: 1.5; }
+
+        /* Error */
+        .error-msg { background: #ffebee; border: 1px solid #ef9a9a; color: #c62828; padding: 12px 16px; border-radius: 8px; margin-top: 15px; display: none; }
+
+        /* Footer */
+        footer { background: #000; color: white; text-align: center; padding: 25px; margin-top: auto; }
+        footer p { opacity: 0.7; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="/index">Sustainify</a>
+    <ul>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/ScrapRates">Scrap Rates</a></li>
+        <li><a href="/PriceCalculator">Price Calculator</a></li>
+        <li><a href="/Profile"><%= username %></a></li>
+    </ul>
+</nav>
+
+<div class="hero">
+    <h1>♻️ AI Recycling Suggestions</h1>
+    <p>Tell us what scrap you have — our AI will suggest 10 DIY ways to reuse it!</p>
+</div>
+
+<div class="form-card">
+    <h2>Select your scrap type</h2>
+
+    <div class="input-group">
+        <label for="scrapSelect">Common scrap types</label>
+        <select id="scrapSelect" onchange="syncCustom(this.value)">
+            <option value="">— Pick from list —</option>
+            <option value="Plastic Bottles">Plastic Bottles</option>
+            <option value="Cardboard and Paper">Cardboard and Paper</option>
+            <option value="Old Newspapers">Old Newspapers</option>
+            <option value="Glass Bottles">Glass Bottles</option>
+            <option value="Aluminium Cans">Aluminium Cans</option>
+            <option value="Iron and Steel Scrap">Iron and Steel Scrap</option>
+            <option value="Old Clothes and Fabric">Old Clothes and Fabric</option>
+            <option value="Electronic Waste (e-waste)">Electronic Waste (e-waste)</option>
+            <option value="Rubber Tyres">Rubber Tyres</option>
+            <option value="Wood Waste">Wood Waste</option>
+            <option value="Cooking Oil">Cooking Oil</option>
+            <option value="Broken Furniture">Broken Furniture</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label for="customScrap">Or type your own</label>
+        <input type="text" id="customScrap"
+               placeholder="e.g. Old mobile phones, Ceramic tiles..."
+               oninput="syncSelect()">
+    </div>
+
+    <button class="btn-suggest" id="suggestBtn" onclick="getSuggestions()">
+        <i class="fas fa-magic"></i>&nbsp; Get 10 DIY Ideas
+    </button>
+    <div class="error-msg" id="errorMsg"></div>
+</div>
+
+<div class="spinner" id="spinner">
+    <i class="fas fa-circle-notch"></i>
+    <p style="margin-top:12px">Generating ideas with AI...</p>
+</div>
+
+<div class="results-section" id="resultsSection">
+    <h3 id="resultsTitle"></h3>
+    <div id="suggestionsList"></div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Sustainify. All Rights Reserved.</p>
+</footer>
+
+<script>
+    function syncCustom(val) {
+        document.getElementById('customScrap').value = val;
+    }
+    function syncSelect() {
+        document.getElementById('scrapSelect').value = '';
+    }
+
+    async function getSuggestions() {
+        const scrapType = document.getElementById('customScrap').value.trim()
+                       || document.getElementById('scrapSelect').value;
+        const errorDiv = document.getElementById('errorMsg');
+        errorDiv.style.display = 'none';
+
+        if (!scrapType) {
+            errorDiv.textContent = 'Please select or type a scrap type first.';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        const btn = document.getElementById('suggestBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>&nbsp; Generating...';
+        document.getElementById('spinner').style.display = 'block';
+        document.getElementById('resultsSection').style.display = 'none';
+
+        try {
+            const response = await fetch('/api/gemini-suggest', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ scrapType })
+            });
+            const data = await response.json();
+            if (!response.ok || data.error) throw new Error(data.error || 'Something went wrong');
+
+            const list = document.getElementById('suggestionsList');
+            list.innerHTML = '';
+            document.getElementById('resultsTitle').textContent = `10 DIY Ideas for: ${scrapType}`;
+
+            data.suggestions.forEach((s, i) => {
+                const text = s.replace(/^\d+\.\s*/, '');
+                const card = document.createElement('div');
+                card.className = 'suggestion-card';
+                card.style.animationDelay = `${i * 60}ms`;
+                card.innerHTML = `<span class="suggestion-number">${i + 1}</span><span class="suggestion-text">${text}</span>`;
+                list.appendChild(card);
+            });
+
+            document.getElementById('resultsSection').style.display = 'block';
+        } catch (err) {
+            errorDiv.textContent = 'Failed to get suggestions: ' + err.message;
+            errorDiv.style.display = 'block';
+        } finally {
+            document.getElementById('spinner').style.display = 'none';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-magic"></i>&nbsp; Get 10 DIY Ideas';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -3,59 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Page with Navbar and Footer</title>
+    <title>Schedule Pickup - Sustainify</title>
     <link rel="stylesheet" href="/CSS/style.css">
-    <!-- Add Font Awesome for Social Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .autocomplete-wrapper { position: relative; }
+        #address-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 999;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #address-suggestions li {
+            padding: 10px 14px;
+            cursor: pointer;
+            list-style: none;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+        #address-suggestions li:hover { background: #f5f5f5; }
+        .location-btn {
+            margin-top: 8px;
+            background: none;
+            border: 1px solid #2e7d32;
+            color: #2e7d32;
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .location-btn:hover { background: #2e7d32; color: white; }
+        .error-banner {
+            background: #ffebee;
+            border: 1px solid #ef9a9a;
+            color: #c62828;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
-<nav>
-    <div class="container">
-        <div class="logo">
-            <p style="font-size:30px; display:inline-block; margin-left: 10px;"><a style="text-decoration: none;color: inherit;" href="/index">Sustainify</a></p>
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <p style="font-size:30px; display:inline-block; margin-left: 10px;">
+                    <a style="text-decoration: none; color: inherit;" href="/index">Sustainify</a>
+                </p>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a href="/index">Home</a></li>
+                    <li><a href="/ScrapRates">Scrap Rates</a></li>
+                    <li><a href="/PriceCalculator">Price Calculator</a></li>
+                    <li><a href="/Profile"><%= username %></a></li>
+                </ul>
+            </div>
         </div>
-        <div class="nav">
-            <ul>
-                <li><a href="/index">Home</a></li>
-                <li><a href="/ScrapRates">Scrap Rates</a></li>
-                <li><a href="/PriceCalculator">Price Calculator</a></li>
-                <li><a href="/Profile"><%=username%></a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Main Form Section -->
     <div class="container">
         <div class="form-section">
-            <div class="form-header">
-            </div><br><br>
+            <div class="form-header"></div><br><br>
+
+            <% if (typeof errorMessage !== 'undefined' && errorMessage && errorMessage.trim()) { %>
+                <div class="error-banner"><%= errorMessage %></div>
+            <% } %>
+
             <form method="post" action="/CreatePickup">
                 <div class="form-group">
                     <label for="date">Enter Date</label>
-                    <input type="date" id="date" placeholder="DD/MM/YY" name="date">
+                    <input type="date" id="date" name="date" required>
                 </div>
 
                 <div class="form-group">
                     <label for="time">Enter Time</label>
-                    <input type="time" id="time" name="time">
+                    <input type="time" id="time" name="time" required>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="address" placeholder="Enter Address" name="address">
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="address" name="address"
+                               placeholder="Start typing your address..." autocomplete="off" required>
+                        <ul id="address-suggestions"></ul>
+                    </div>
+                    <button type="button" class="location-btn" onclick="useMyLocation()">
+                        <i class="fas fa-location-arrow"></i> Use My Location
+                    </button>
                 </div>
 
                 <div class="form-group">
                     <label for="pincode">Pincode</label>
-                    <input type="number" id="pincode" placeholder="Pincode" name="pincode">
+                    <input type="number" id="pincode" name="pincode"
+                           placeholder="Pincode (auto-filled from address)" required>
                 </div>
 
                 <div class="form-group">
                     <label for="weight">Estimated Weight</label>
-                    <select id="weight" name="weight">
-                        <option>Select Weight</option>
+                    <select id="weight" name="weight" required>
+                        <option value="">Select Weight</option>
                         <option>Upto 20 kg</option>
                         <option>Upto 50 kg</option>
                         <option>Upto 100 kg</option>
@@ -63,10 +127,11 @@
                         <option>Over 500 kg</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="remarks">Remarks (Optional)</label>
-                    <textarea id="remarks" placeholder="Add any additional remarks here" name="remarks"></textarea>
+                    <textarea id="remarks" name="remarks"
+                              placeholder="Add any additional remarks here"></textarea>
                 </div>
 
                 <button type="submit" class="submit-button">SCHEDULE A PICKUP</button>
@@ -89,14 +154,118 @@
             <div class="footernav">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="https://www.iiita.ac.in/" target="_blank">About IIITA</a></li>
+                    <li><a href="/LoginPage">Login</a></li>
                 </ul>
             </div>
         </div>
         <div class="footerbottom">
-            <p>Copyright &copy;2023</p>
+            <p>Copyright &copy; 2024 Sustainify</p>
         </div>
     </footer>
+
+    <script>
+        // ---------------------------------------------------------------------------
+        // Nominatim address autocomplete
+        // Uses OpenStreetMap Nominatim — free, no API key, no billing surprises.
+        // Debounced at 300ms to avoid hammering the API on every keystroke.
+        // Nominatim usage policy: max 1 req/s, must send a User-Agent.
+        // ---------------------------------------------------------------------------
+        let debounceTimer;
+        const addressInput = document.getElementById('address');
+        const suggestionsList = document.getElementById('address-suggestions');
+        const pincodeInput = document.getElementById('pincode');
+
+        addressInput.addEventListener('input', function () {
+            clearTimeout(debounceTimer);
+            const query = this.value.trim();
+
+            if (query.length < 3) {
+                suggestionsList.style.display = 'none';
+                suggestionsList.innerHTML = '';
+                return;
+            }
+
+            debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
+        });
+
+        async function fetchSuggestions(query) {
+            try {
+                const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=in&format=json&addressdetails=1&limit=5`;
+                const response = await fetch(url, {
+                    headers: { 'Accept-Language': 'en', 'User-Agent': 'Sustainify/1.0' }
+                });
+                const results = await response.json();
+
+                suggestionsList.innerHTML = '';
+                if (results.length === 0) {
+                    suggestionsList.style.display = 'none';
+                    return;
+                }
+
+                results.forEach(place => {
+                    const li = document.createElement('li');
+                    li.textContent = place.display_name;
+                    li.addEventListener('click', () => {
+                        addressInput.value = place.display_name;
+                        suggestionsList.style.display = 'none';
+                        suggestionsList.innerHTML = '';
+                        // Auto-fill pincode from Nominatim address details
+                        const postcode = place.address && place.address.postcode;
+                        if (postcode) pincodeInput.value = postcode.replace(/\s/g, '');
+                    });
+                    suggestionsList.appendChild(li);
+                });
+
+                suggestionsList.style.display = 'block';
+            } catch (err) {
+                console.error('Nominatim error:', err);
+            }
+        }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!addressInput.contains(e.target) && !suggestionsList.contains(e.target)) {
+                suggestionsList.style.display = 'none';
+            }
+        });
+
+        // ---------------------------------------------------------------------------
+        // Use My Location — browser Geolocation API + Nominatim reverse geocoding
+        // ---------------------------------------------------------------------------
+        function useMyLocation() {
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser.');
+                return;
+            }
+
+            addressInput.placeholder = 'Fetching your location...';
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    try {
+                        const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`;
+                        const response = await fetch(url, {
+                            headers: { 'Accept-Language': 'en', 'User-Agent': 'Sustainify/1.0' }
+                        });
+                        const data = await response.json();
+
+                        addressInput.value = data.display_name || '';
+                        addressInput.placeholder = 'Start typing your address...';
+
+                        const postcode = data.address && data.address.postcode;
+                        if (postcode) pincodeInput.value = postcode.replace(/\s/g, '');
+                    } catch (err) {
+                        console.error('Reverse geocode error:', err);
+                        addressInput.placeholder = 'Could not fetch address. Try typing.';
+                    }
+                },
+                (err) => {
+                    console.error('Geolocation error:', err);
+                    addressInput.placeholder = 'Location access denied. Please type your address.';
+                }
+            );
+        }
+    </script>
 </body>
 </html>

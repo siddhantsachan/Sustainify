@@ -237,7 +237,7 @@
                 <ul>
                     <li><a href="/index">Home</a></li>
                     <li><a href="/ScrapRates">Scrap Rates</a></li>
-                    <li><a href="/PriceCalculator">Price Calculator</a></li>
+                    <li><a href="/PriceCalculator">Price Calculator</a></li><li><a href="/logout">Logout</a></li>
                    
                 </ul>
             </div>
@@ -251,7 +251,7 @@
             <% pickups.forEach(function(val) { %>
                 <div class="pickup-card">
                     <h2>PickupID: <%= val._id %></h2>
-                    <p><b>Date of Pickup:</b> <%= val.date %></p>
+                    <p><b>Date of Pickup:</b> <%= new Date(val.date).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) %></p>
                     <p><b>Scheduled at:</b> <%= val.time %></p>
                     <p><b>Address:</b> <%= val.address %></p>
                     <p><b>Pincode:</b> <%= val.pincode %></p>
@@ -276,7 +276,7 @@
             <div class="footernav">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/login">Login</a></li>
+                    <li><a href="/LoginPage">Login</a></li>
                     <li><a href="https://www.iiita.ac.in/" target="_blank">About IIITA</a></li>
                     <!-- <li><a href="">Contact Us</a></li> -->
                 </ul>

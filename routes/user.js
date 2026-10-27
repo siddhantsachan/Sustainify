@@ -58,7 +58,7 @@ router.get("/ChooseOptionPage", requireUserAuth, (req, res) => {
 });
 
 // Checkoptions — shows Scheduled / Completed buttons
-router.get("/Checkoptions", (req, res) => {
+router.get("/Checkoptions", requireUserAuth, (req, res) => {
   res.render("Checkoption");
 });
 
@@ -113,7 +113,7 @@ router.post(
   [
     body("email").isEmail().withMessage("Invalid email address"),
     body("name").trim().isLength({ min: 2 }).withMessage("Name must be at least 2 characters"),
-    body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
+    body("password").isLength({ min: 8 }).withMessage("Password must be at least 8 characters"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -231,7 +231,7 @@ router.post("/LoginPage", loginLimiter, async (req, res, next) => {
 // ---------------------------------------------------------------------------
 router.get("/NewPass", (req, res) => res.render("NewPass"));
 
-router.post("/NewPass", async (req, res, next) => {
+router.post("/NewPass", body("newpass").isLength({ min: 8 }).withMessage("Password must be at least 8 characters"), async (req, res, next) => {
   try {
     const user = await User.findOne({ Email: req.session.forgotEmail });
     if (!user) return res.status(404).send("User not found");

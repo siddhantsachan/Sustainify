@@ -1,3 +1,4 @@
+const rateLimit = require("express-rate-limit");
 const express = require("express");
 const router = express.Router();
 const pickmodel = require("../models/pickup");
@@ -16,7 +17,9 @@ router.get("/AdministratorLoginPage", (req, res) => {
   res.render("AdministratorLoginPage", { errorMessage: "" });
 });
 
-router.post("/AdminLogin", (req, res) => {
+const adminLoginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 5, message: 'Too many login attempts. Please try again after 15 minutes.', standardHeaders: true, legacyHeaders: false });
+
+router.post("/AdminLogin", adminLoginLimiter, (req, res) => {
   const { email, password } = req.body;
   if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
     req.session.adminName = "Admin";

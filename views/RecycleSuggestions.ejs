@@ -184,7 +184,7 @@
                 const card = document.createElement('div');
                 card.className = 'suggestion-card';
                 card.style.animationDelay = `${i * 60}ms`;
-                card.innerHTML = `<span class="suggestion-number">${i + 1}</span><span class="suggestion-text">${text}</span>`;
+                const numSpan = document.createElement('span'); numSpan.className = 'suggestion-number'; numSpan.textContent = i + 1; const textSpan = document.createElement('span'); textSpan.className = 'suggestion-text'; textSpan.textContent = text; card.appendChild(numSpan); card.appendChild(textSpan);
                 list.appendChild(card);
             });
 

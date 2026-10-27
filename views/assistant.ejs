@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainify - AI Assistant</title>
+    <link rel="stylesheet" href="/CSS/assistant.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Sustainify Standard Navigation Bar -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <a href="/index"><b>Sustainify</b></a>
+            </div>
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="/assistant" class="active">AI Assistant</a></li>
+                <li><a href="/ScrapRates">Scrap Rates</a></li>
+                <li><a href="/PriceCalculator">Price Calculator</a></li>
+                <li><a href="/ScheduledPickups">My Pickups</a></li>
+                <li><a href="/Profile"><%= username %></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Banner -->
+    <h1 class="assistant-header"><b>Sustainify AI Assistant</b></h1>
+    <p class="assistant-subtitle">Ask questions about live scrap prices, recycling policies, or schedule a doorstep pickup conversationally.</p>
+
+    <!-- Main Workspace -->
+    <div class="assistant-container">
+
+        <!-- Left Column: Quick Actions & RAG Info -->
+        <div class="assistant-sidebar">
+            <h3>Knowledge Assistant</h3>
+            <p>Our assistant is connected to live scrap rates and Sustainify's verified recycling knowledge base.</p>
+            
+            <div class="rag-status-box">
+                <span class="status-dot-green"></span>
+                <span><b>RAG System:</b> Live DB &amp; KB Grounded</span>
+            </div>
+
+            <div class="sidebar-chips-title">Common Inquiries</div>
+            <div class="sidebar-chips">
+                <button class="sidebar-chip-btn" onclick="sendSuggestion('What are today\'s scrap rates for metals and paper?')">
+                    <i class="fas fa-tag"></i> Check Scrap Rates
+                </button>
+                <button class="sidebar-chip-btn" onclick="sendSuggestion('I want to schedule a scrap pickup for tomorrow')">
+                    <i class="fas fa-calendar-plus"></i> Schedule a Pickup
+                </button>
+                <button class="sidebar-chip-btn" onclick="sendSuggestion('What items are not accepted for recycling?')">
+                    <i class="fas fa-ban"></i> Prohibited Items
+                </button>
+                <button class="sidebar-chip-btn" onclick="sendSuggestion('What is the minimum weight requirement for pickup?')">
+                    <i class="fas fa-weight"></i> Minimum Weight Info
+                </button>
+                <button class="sidebar-chip-btn" onclick="sendSuggestion('Can I give old e-waste and broken electronic appliances?')">
+                    <i class="fas fa-tv"></i> E-Waste &amp; Appliances
+                </button>
+            </div>
+
+            <div style="margin-top: 18px;">
+                <button class="sidebar-chip-btn" onclick="resetConversation()" style="width: 100%; border-color: #d32f2f; color: #d32f2f;">
+                    <i class="fas fa-redo"></i> Reset Conversation
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Chat Card -->
+        <div class="assistant-chat-card">
+            <div class="chat-card-topbar">
+                <h4><i class="fas fa-robot"></i> EcoBot Assistant</h4>
+                <span class="badge">Online</span>
+            </div>
+
+            <div class="chat-messages-area" id="messagesContainer">
+                <div class="chat-msg bot">
+                    <div class="chat-msg-bubble">
+                        <p>Hello <b><%= username %></b>! I'm <b>EcoBot</b>, your Sustainify assistant.</p>
+                        <p>You can ask me about <b>live scrap rates</b> from our database, check accepted recycling materials, or <b>schedule your doorstep pickup</b> naturally right here! How can I help you today?</p>
+                        <span class="chat-msg-time">Just now</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-box" id="typingIndicator">
+                <i class="fas fa-circle-notch fa-spin"></i> EcoBot is thinking...
+            </div>
+
+            <!-- Input Row -->
+            <form class="chat-input-row" id="chatForm" onsubmit="handleSendMessage(event)">
+                <input 
+                    type="text" 
+                    id="userInput" 
+                    placeholder="Ask about scrap rates, materials, or say 'Schedule a pickup'..." 
+                    autocomplete="off"
+                    required
+                />
+                <button type="submit" class="chat-send-button" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Sustainify Standard Footer -->
+    <footer>
+        <div class="footernav" id="about_us">
+            <div class="social_icons">
+                <a href="https://www.facebook.com/iiitall/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/iiit.allahabad/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://twitter.com/iiita_official?lang=en" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+            <div class="footernav">
+                <ul>
+                    <li><a href="/index">Home</a></li>
+                    <li><a href="/LoginPage">Login</a></li>
+                    <li><a href="https://www.iiita.ac.in/" target="_blank">About IIITA</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footerbottom">
+            <p>Copyright &copy; 2024 Sustainify. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const messagesContainer = document.getElementById("messagesContainer");
+        const typingIndicator = document.getElementById("typingIndicator");
+        const userInput = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        // --- No client-side history array — history lives on the server ---
+
+        function formatBotText(rawText) {
+            if (!rawText) return "";
+            let safe = rawText
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+            safe = safe.replace(/### (.*?)\n/g, '<h4 style="margin: 8px 0 4px; color: black;">$1</h4>');
+            safe = safe.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            safe = safe.replace(/^[•\-\*]\s+(.*?)$/gm, '<li>$1</li>');
+            safe = safe.replace(/(<li>.*?<\/li>(\s*<li>.*?<\/li>)*)/gs, '<ul style="margin: 6px 0 6px 18px;">$1</ul>');
+            
+            safe = safe.split(/\n\n+/).map(p => {
+                if (p.startsWith('<ul') || p.startsWith('<h4')) return p;
+                return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+            }).join('');
+
+            return safe;
+        }
+
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function appendUserMessage(text) {
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "chat-msg user";
+            msgDiv.innerHTML = `
+                <div class="chat-msg-bubble">
+                    <p>${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                </div>
+                <span class="chat-msg-time">${time}</span>
+            `;
+            messagesContainer.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function appendBotMessage(text, bookingData = null, draftReady = false, validationErrors = null) {
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "chat-msg bot";
+
+            let bubbleContent = formatBotText(text);
+
+            // Show validation errors if any
+            if (validationErrors && validationErrors.length > 0) {
+                bubbleContent += `
+                    <div style="background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; padding: 10px; margin-top: 10px;">
+                        <b style="color: #e65100;"><i class="fas fa-exclamation-triangle"></i> Missing or invalid details:</b>
+                        <ul style="margin: 6px 0 0 16px; color: #bf360c;">
+                            ${validationErrors.map(e => `<li>${e}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Show booking confirmation card ONLY when server has validated the draft
+            if (draftReady && bookingData) {
+                const cardId = "booking-box-" + Date.now();
+                bubbleContent += `
+                    <div class="assistant-booking-box" id="${cardId}">
+                        <h5><i class="fas fa-calendar-check"></i> Pickup Details Summary</h5>
+                        <div class="booking-grid">
+                            <div class="booking-field">
+                                <span class="field-label"><i class="far fa-calendar-alt"></i> Date</span>
+                                <b>${bookingData.date || 'TBD'}</b>
+                            </div>
+                            <div class="booking-field">
+                                <span class="field-label"><i class="far fa-clock"></i> Time Slot</span>
+                                <b>${bookingData.time || 'Morning'}</b>
+                            </div>
+                            <div class="booking-field full">
+                                <span class="field-label"><i class="fas fa-map-marker-alt"></i> Address</span>
+                                <b>${bookingData.address || ''} (Pincode: ${bookingData.pincode || ''})</b>
+                            </div>
+                            <div class="booking-field">
+                                <span class="field-label"><i class="fas fa-weight-hanging"></i> Est. Weight</span>
+                                <b>${bookingData.weight || '5-10 kg'}</b>
+                            </div>
+                            <div class="booking-field">
+                                <span class="field-label"><i class="fas fa-recycle"></i> Remarks</span>
+                                <b>${bookingData.remarks || 'General scrap'}</b>
+                            </div>
+                        </div>
+                        <button class="btn-confirm-pickup" id="btn-confirm-${cardId}" onclick='confirmBooking("${cardId}")'>
+                            <i class="fas fa-check-circle"></i> Confirm &amp; Book Doorstep Pickup
+                        </button>
+                    </div>
+                `;
+            }
+
+            msgDiv.innerHTML = `
+                <div class="chat-msg-bubble">
+                    ${bubbleContent}
+                </div>
+                <span class="chat-msg-time">${time}</span>
+            `;
+            messagesContainer.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        async function handleSendMessage(event) {
+            if (event) event.preventDefault();
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            userInput.value = "";
+            userInput.focus();
+            appendUserMessage(text);
+
+            typingIndicator.style.display = "flex";
+            sendBtn.disabled = true;
+            scrollToBottom();
+
+            try {
+                // Send only the message — server manages history
+                const response = await fetch("/api/assistant/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: text }),
+                });
+
+                const data = await response.json();
+                typingIndicator.style.display = "none";
+                sendBtn.disabled = false;
+
+                if (!response.ok || data.error) {
+                    appendBotMessage("⚠️ " + (data.error || "Sorry, I ran into an error. Please try again."));
+                    return;
+                }
+
+                appendBotMessage(data.reply, data.bookingData, data.draftReady, data.validationErrors);
+
+            } catch (err) {
+                typingIndicator.style.display = "none";
+                sendBtn.disabled = false;
+                appendBotMessage("⚠️ Network error. Please check your connection and try again.");
+            }
+        }
+
+        function sendSuggestion(promptText) {
+            userInput.value = promptText;
+            handleSendMessage();
+        }
+
+        // Confirm booking — calls server which checks session draft (HITL gate)
+        async function confirmBooking(cardId) {
+            const cardElem = document.getElementById(cardId);
+            const btn = document.getElementById(`btn-confirm-${cardId}`);
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Confirming with Sustainify...`;
+            }
+
+            try {
+                // No booking data in body — server uses the validated session draft
+                const response = await fetch("/api/assistant/confirm-booking", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({}),
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.error || "Failed to schedule pickup");
+                }
+
+                if (cardElem) {
+                    cardElem.innerHTML = `
+                        <div style="background-color: #e8f5e9; border: 1px solid #a5d6a7; color: #1b5e20; padding: 14px; border-radius: 5px; text-align: center;">
+                            <b style="font-size: 16px;">✓ Doorstep Pickup Confirmed!</b>
+                            <p style="margin: 6px 0;">Pickup ID: <code>${result.pickupId}</code></p>
+                            <p style="font-size: 13px;">A verified pickup boy will contact you on the scheduled date.</p>
+                            <div style="margin-top: 10px;">
+                                <a href="/ScheduledPickups" style="color: black; font-weight: bold; text-decoration: underline;">View in Scheduled Pickups &rarr;</a>
+                            </div>
+                        </div>
+                    `;
+                }
+
+            } catch (err) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Retry Booking (${err.message})`;
+                }
+            }
+        }
+
+        // Reset conversation
+        async function resetConversation() {
+            try {
+                await fetch("/api/assistant/reset", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                });
+                // Clear chat UI
+                messagesContainer.innerHTML = `
+                    <div class="chat-msg bot">
+                        <div class="chat-msg-bubble">
+                            <p>🔄 Conversation reset! How can I help you today?</p>
+                            <span class="chat-msg-time">Just now</span>
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                console.error("Failed to reset conversation:", err);
+            }
+        }
+    </script>
+
+</body>
+</html>

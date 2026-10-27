@@ -55,6 +55,7 @@ app.use("/", require("./routes/user"));
 app.use("/", require("./routes/pickupboy"));
 app.use("/", require("./routes/admin"));
 app.use("/", require("./routes/scrap"));
+app.use("/", require("./routes/assistant"));
 
 // ---------------------------------------------------------------------------
 // Centralised error handler

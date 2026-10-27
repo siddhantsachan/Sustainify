@@ -1,0 +1,258 @@
+/* Sustainify Floating AI Assistant Chat Widget - Standard Theme */
+.sustainify-chat-trigger {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  z-index: 9999;
+  transition: all 0.25s ease;
+}
+
+.sustainify-chat-trigger:hover {
+  background-color: rgb(36, 36, 36);
+  transform: scale(1.05);
+}
+
+.sustainify-chat-trigger .badge-pulse {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 12px;
+  height: 12px;
+  background-color: green;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+/* Chat Widget Drawer Window */
+.sustainify-chat-window {
+  position: fixed;
+  bottom: 92px;
+  right: 24px;
+  width: 370px;
+  max-width: calc(100vw - 32px);
+  height: 520px;
+  max-height: calc(100vh - 120px);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid #333333;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9998;
+  opacity: 0;
+  transform: translateY(15px);
+  pointer-events: none;
+  font-family: Arial, sans-serif;
+  transition: all 0.25s ease;
+}
+
+.sustainify-chat-window.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Widget Header */
+.widget-header {
+  background-color: black;
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.widget-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.widget-avatar {
+  font-size: 18px;
+}
+
+.widget-header-title h4 {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+}
+
+.widget-header-title p {
+  font-size: 11px;
+  color: #cccccc;
+  margin: 0;
+}
+
+.widget-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.widget-btn-icon {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+
+.widget-btn-icon:hover {
+  opacity: 1;
+  color: green;
+}
+
+/* Widget Messages */
+.widget-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f8f9fa;
+}
+
+.widget-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  font-size: 13.5px;
+}
+
+.widget-msg.user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.widget-msg.bot {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.widget-bubble {
+  padding: 10px 13px;
+  border-radius: 6px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.widget-msg.user .widget-bubble {
+  background-color: black;
+  color: white;
+}
+
+.widget-msg.bot .widget-bubble {
+  background-color: white;
+  color: #333333;
+  border: 1px solid #dcdcdc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.widget-bubble p {
+  margin-bottom: 5px;
+}
+
+.widget-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.widget-bubble ul {
+  margin: 4px 0 6px 14px;
+}
+
+/* Booking Card inside Widget */
+.widget-booking-card {
+  margin-top: 10px;
+  background-color: #ffffff;
+  border: 1.5px solid black;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 12.5px;
+  color: #212121;
+}
+
+.widget-booking-card div {
+  margin-bottom: 4px;
+}
+
+.widget-booking-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.widget-booking-btn:hover {
+  background-color: rgb(25, 132, 57);
+}
+
+/* Widget Input Bar */
+.widget-input-bar {
+  padding: 10px 14px;
+  background-color: white;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.widget-input-bar input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 13.5px;
+  font-family: Arial, sans-serif;
+  outline: none;
+}
+
+.widget-input-bar input:focus {
+  border-color: black;
+}
+
+.widget-send-btn {
+  padding: 9px 14px;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.widget-send-btn:hover {
+  background-color: rgb(45, 45, 45);
+}

@@ -1,0 +1,509 @@
+/* Sustainify AI Assistant Stylesheet - Aligned with Sustainify Core Theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navigation Bar */
+nav {
+    height: 75px;
+    line-height: 75px;
+    background-color: black;
+    color: white;
+    width: 100%;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+nav .logo a {
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 0 25px;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav li a:hover,
+nav li a.active {
+    color: green;
+}
+
+/* Page Header */
+.assistant-header {
+    text-align: center;
+    margin: 25px auto 10px;
+    color: white;
+    font-size: 32px;
+    background-color: #343a40;
+    padding: 16px 25px;
+    border: 3px solid #212529;
+    border-radius: 8px;
+    max-width: 1100px;
+    width: 95%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.assistant-subtitle {
+    text-align: center;
+    color: #666666;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Main Container Layout */
+.assistant-container {
+    display: flex;
+    max-width: 1100px;
+    width: 95%;
+    margin: 0 auto 40px;
+    gap: 25px;
+    flex: 1;
+}
+
+/* Sidebar Info Card */
+.assistant-sidebar {
+    width: 320px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.assistant-sidebar h3 {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #212529;
+    padding-bottom: 8px;
+}
+
+.assistant-sidebar p {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.rag-status-box {
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: #1b5e20;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot-green {
+    width: 9px;
+    height: 9px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.sidebar-chips-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.sidebar-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-chip-btn {
+    text-align: left;
+    background-color: #f8f9fa;
+    border: 1px solid #dddddd;
+    color: #333333;
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sidebar-chip-btn:hover {
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+/* Chat Main Card */
+.assistant-chat-card {
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+/* Chat Header Bar */
+.chat-card-topbar {
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-card-topbar h4 {
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-card-topbar span.badge {
+    background-color: green;
+    color: white;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Messages Area */
+.chat-messages-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #fafafa;
+}
+
+.chat-msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-msg.user {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.chat-msg.bot {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.chat-msg-bubble {
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.chat-msg.user .chat-msg-bubble {
+    background-color: black;
+    color: white;
+}
+
+.chat-msg.bot .chat-msg-bubble {
+    background-color: white;
+    color: #333333;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.chat-msg-bubble p {
+    margin-bottom: 6px;
+}
+
+.chat-msg-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-msg-bubble ul, .chat-msg-bubble ol {
+    margin: 6px 0 6px 20px;
+}
+
+.chat-msg-time {
+    font-size: 11px;
+    color: #888888;
+    margin-top: 4px;
+}
+
+/* Booking Card (Interactive Confirmation) */
+.assistant-booking-box {
+    margin-top: 12px;
+    background-color: #ffffff;
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.assistant-booking-box h5 {
+    font-size: 16px;
+    color: black;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 13.5px;
+}
+
+.booking-field {
+    background-color: #f8f9fa;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.booking-field.full {
+    grid-column: span 2;
+}
+
+.booking-field span.field-label {
+    display: block;
+    font-size: 11px;
+    color: #666666;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.booking-field b {
+    color: black;
+}
+
+/* Sustainify Core Button Style */
+.btn-confirm-pickup {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn-confirm-pickup:hover {
+    background-color: rgb(25, 132, 57);
+}
+
+.btn-confirm-pickup:disabled {
+    background-color: #999999;
+    cursor: not-allowed;
+}
+
+/* Typing Indicator */
+.typing-box {
+    display: none;
+    padding: 10px 16px;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    width: fit-content;
+    font-size: 13px;
+    color: #777777;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    gap: 4px;
+    align-items: center;
+}
+
+/* Chat Input Bar */
+.chat-input-row {
+    padding: 14px 20px;
+    background-color: white;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-row input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.chat-input-row input:focus {
+    border-color: black;
+}
+
+.chat-send-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0 22px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-send-button:hover {
+    background-color: rgb(45, 45, 45);
+}
+
+.chat-send-button:disabled {
+    background-color: #888888;
+    cursor: not-allowed;
+}
+
+/* Sustainify Footer (Exact match) */
+footer {
+    width: 100%;
+    background-color: black;
+    height: 250px;
+    border-top-left-radius: 125px;
+    padding: 80px 40px 30px;
+    margin-top: auto;
+}
+
+footer p {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
+
+.footernav {
+    margin: 20px 0;
+}
+
+.footernav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+.footernav ul li a {
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.2em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footernav ul li a:hover {
+    opacity: 1;
+}
+
+.footerbottom {
+    padding: 10px;
+    text-align: center;
+}
+
+.footerbottom p {
+    color: white;
+}
+
+.social_icons {
+    display: flex;
+    justify-content: center;
+}
+
+.social_icons a {
+    text-decoration: none;
+    padding: 10px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.social_icons a i {
+    font-size: 1.8em;
+    color: black;
+}
+
+.social_icons a:hover {
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.social_icons a:hover i {
+    color: white;
+    transition: 0.5s;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+    nav .container { padding: 0 20px; }
+    .assistant-container { flex-direction: column; }
+    .assistant-sidebar { width: 100%; }
+    .assistant-chat-card { height: 500px; }
+    .booking-grid { grid-template-columns: 1fr; }
+    .booking-field.full { grid-column: span 1; }
+    footer { border-top-left-radius: 50px; padding: 40px 20px; height: auto; }
+}

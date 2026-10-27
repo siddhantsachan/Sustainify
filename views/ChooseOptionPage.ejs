@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Page with Navbar and Footer</title>
+    <title>Sustainify - Choose Option</title>
     <link rel="stylesheet" href="CSS/ChooseOptionPageStylesheet.css">
+    <link rel="stylesheet" href="/CSS/chat-widget.css">
     <!-- Add Font Awesome for Social Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script
@@ -20,10 +21,10 @@
             <h1><a style="text-decoration: none;color: inherit;" href="/index">Sustainify</a></h1>
             <ul>
                 <li><a href="/index">Home</a></li>
+                <li><a href="/assistant">AI Assistant</a></li>
                 <li><a href="/ScrapRates">Scrap Rates</a></li>
                 <li><a href="/PriceCalculator">Price Calculator</a></li>
                 <li><a href="#AbtUs">About Us</a></li>
-                <!-- <li><a href="#">Services</a></li> -->
                 <li><a href="/Profile"><%= nm %></a></li>
             </ul>
         </div>
@@ -34,7 +35,7 @@
         <div class="text-section">
             <h1>Sell your recyclables online with <span>Sustainify!</span></h1>
             <p>Paper - Plastics - Metals - Appliances</p>
-            <p>Don't say no to extra money!!</a></p>
+            <p>Don't say no to extra money!!</p>
             <img src="assets/img/ChooseImg1.png" alt="Recycling Illustration" class="illustration">
         </div>
         
@@ -52,20 +53,22 @@
                 <input type="hidden" name="nm" value="<%= nm %>">
                 <button class="action-btn">Check My Pickups</button>
             </form>
+            <a href="/assistant" style="text-decoration:none;">
+                <button class="action-btn" type="button">
+                    🤖 AI Scheduling Assistant
+                </button>
+            </a>
             <a href="/RecycleSuggestions" style="text-decoration:none;">
                 <button class="action-btn" type="button" style="background-color:#2e7d32;">
                     ♻️ Get DIY Recycling Ideas
                 </button>
             </a>
-            
         </div>
     </div>
     <br><br><br><br>
     <div class="steps">
-
         <p style="font-size: 40px;color: #171717;">How it works?</p><br><br><br><br><br>
         <p style="font-size: 30px; color: #666666;">In three Easy steps</p>
-        
     </div>
     <br>
 
@@ -80,45 +83,28 @@
     <br>
     <p style="font-size: 40px;color: #171717;text-align: center;">Why Sustainify?</p>
     <div class="why">
-        <!-- <table>
-            <tr>
-                <td> -->
-                <ul>
-                    <li><b>Eco-Friendly Impact:</b> Promotes sustainable waste management by recycling scrap.</li>
-                    <li><b>User-Centric Platform:</b> Easy-to-use interface for efficient scrap disposal.</li>
-                    <li><b>Community Engagement:</b> Connects recyclers, sellers, and buyers seamlessly.</li>
-                    <li><b>Real-Time Tracking:</b> Offers live updates for scrap collection and processing.</li>
-                </ul>
-                <!-- </td> -->
-                <!-- <td>
-                    <img src="Bottom.svg" alt="Img">
-                </td> -->
-            <!-- </tr> -->
-            
-        <!-- </table> -->
+        <ul>
+            <li><b>Eco-Friendly Impact:</b> Promotes sustainable waste management by recycling scrap.</li>
+            <li><b>User-Centric Platform:</b> Easy-to-use interface for efficient scrap disposal.</li>
+            <li><b>Community Engagement:</b> Connects recyclers, sellers, and buyers seamlessly.</li>
+            <li><b>Real-Time Tracking:</b> Offers live updates for scrap collection and processing.</li>
+        </ul>
     </div>
-    <!-- <div class="">
-        <div class="AboutUs">
-            <img src="About-us-background1.avif" alt="Img"  >
-        </div>
-        
-    </div> -->
+
     <div class="AboutUs" id="AbtUs">
-        <div class="AboutUs-text" >
+        <div class="AboutUs-text">
             <p style="color: black;"><b>About Us</b></p>
             <ul>
                 <li><b>Mission:</b> To simplify scrap collection and recycling by offering fair prices, easy scheduling, and eco-friendly solutions for every home.</li>
-                <li><b>Vision:</b>To lead the way in sustainable scrap management, making recycling convenient and rewarding for all.</li>
+                <li><b>Vision:</b> To lead the way in sustainable scrap management, making recycling convenient and rewarding for all.</li>
                 <li><b>Privacy and Security:</b> We prioritize the protection of users' data with robust encryption and strict privacy measures.</li>
                 <li><b>User-Friendly Interface:</b> Our website offers intuitive navigation and comprehensive search features for reporting and finding lost items.</li>
-
             </ul>
         </div>
         <div class="AboutUsImg">
             <img src="assets/img/About-Us1.avif" alt="Img" width="500px" height="300px">
         </div>
     </div>
-    
 
     <!-- Footer -->
     <footer>
@@ -139,5 +125,7 @@
         </div>
     </footer>
 
+    <!-- Floating AI Assistant Widget -->
+    <script src="/JS/chat-widget.js"></script>
 </body>
 </html>

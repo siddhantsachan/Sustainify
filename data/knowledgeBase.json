@@ -1,0 +1,50 @@
+[
+  {
+    "id": "kb-01",
+    "title": "About Sustainify and How Pickup Works",
+    "category": "General & Operations",
+    "content": "Sustainify is an eco-friendly digital scrap collection and recycling platform. Users can schedule a doorstep pickup of their recyclables (paper, plastic, metal, appliances, and e-waste) through the website or AI assistant. Once a pickup is scheduled, a verified pickup boy from your local pincode is assigned. They arrive at your doorstep during the chosen time slot, weigh the scrap using certified digital scales, pay you instantly (cash or UPI), and transport the items to certified recycling hubs."
+  },
+  {
+    "id": "kb-02",
+    "title": "Accepted Scrap Categories and Materials",
+    "category": "Accepted Materials",
+    "content": "Sustainify accepts a wide range of recyclable scrap materials: 1) Paper & Cardboard: old newspapers, corrugated boxes, cartons, magazines, office papers, notebooks, and shredded paper. 2) Plastics: beverage bottles (PET), milk pouches (LDPE), hard plastic buckets, oil containers (HDPE), and plastic crates. 3) Metals: iron rods, steel utensils, copper wires, brass idols, aluminum cans, aluminum frames, and lead. 4) E-Waste & Appliances: refrigerators, washing machines, microwaves, air conditioners, CPUs, laptops, broken smartphones, batteries, printers, and cables. 5) Glass: beer bottles, wine bottles, and intact glass jars."
+  },
+  {
+    "id": "kb-03",
+    "title": "Non-Acceptable and Hazardous Materials",
+    "category": "Safety & Prohibited Items",
+    "content": "For safety and legal compliance, Sustainify does NOT accept: wet kitchen/organic waste, sanitary waste, medical or hospital bio-waste, explosive substances, chemicals or radioactive items, leaking chemical containers, broken fluorescent tube lights or mercury thermometers, loose broken glass shards, or pressurized gas cylinders."
+  },
+  {
+    "id": "kb-04",
+    "title": "Minimum Weight Requirement & Pricing Guidelines",
+    "category": "Pricing & Weight",
+    "content": "To ensure economical and eco-friendly collection trips, the recommended minimum scrap weight for scheduling a doorstep pickup is 5 kg (can be a combination of different materials such as newspapers, cardboard, and plastic). There is no upper limit for weight. Rates are determined based on prevailing daily market recycling prices and are weighed accurately using digital scales. Users can also check live prices in the Scrap Rates section or use the Price Calculator."
+  },
+  {
+    "id": "kb-05",
+    "title": "Service Areas, Pincodes, and Operating Hours",
+    "category": "Service & Logistics",
+    "content": "Sustainify operates 7 days a week from 9:00 AM to 6:00 PM. Pickups can be scheduled for any available date in advance or same-day if booked early in the morning. Services are organized by 6-digit postal pincodes. Pickup boys are local agents approved by Sustainify admin to ensure quick and dependable doorstep service."
+  },
+  {
+    "id": "kb-06",
+    "title": "Pickup Verification and Payment Security",
+    "category": "Trust & Security",
+    "content": "Every pickup boy is vetted and approved by Sustainify administrators with Aadhar and police verification. They carry identification and will verify the pickup ID before taking scrap. Payments are calculated immediately upon weighing and paid out via instant UPI transfer (Google Pay, PhonePe, Paytm) or cash according to the user's preference."
+  },
+  {
+    "id": "kb-07",
+    "title": "Cancelling or Rescheduling a Pickup",
+    "category": "Account & Pickups",
+    "content": "Users can view all upcoming scheduled pickups under the 'Check My Pickups' > 'Scheduled Pickups' page. Pickups can be cancelled at any time free of charge with a single click before the pickup boy completes the order. To reschedule, users can cancel their pending pickup and book a new convenient slot, or ask the AI assistant to help schedule a new slot."
+  },
+  {
+    "id": "kb-08",
+    "title": "Environmental Impact and DIY Upcycling",
+    "category": "Sustainability & Impact",
+    "content": "Recycling through Sustainify prevents toxic materials from ending up in landfills. Every 1 ton of paper recycled saves approximately 17 mature trees, 7,000 gallons of water, and 4,000 kWh of electricity. Recycling metal reduces carbon emissions by up to 90% compared to virgin mining. Sustainify also provides AI-powered DIY upcycling suggestions to help users creatively reuse items before disposal."
+  }
+]
